@@ -1,0 +1,67 @@
+Point 1. Your main python file name should be application.py
+Point 2. Your flask object name, which we have defined in application.py should also be the application.
+Point 3. .ebignore  is responsible to hold the name of those files which we don't want to push on a cloud.
+Point 4. Create a requirements.txt file.
+        Command : pip freeze > requirements.txt
+Point 5. Create a folder called .ebextensions
+Point 6. Inside .ebextensions we need a python.config file.
+Point 7. Mention the commands in python.config
+            option_settings:
+              "aws:elasticbeanstalk:container:python":
+                WSGIPath: application:application
+
+
+
+
+
+Summary
+Create a AWS account
+Make your application ready
+            Point 1. Your main python file name should be application.py
+            Point 2. Your flask object name, which we have defined in application.py should also be the application.
+            Point 3. .ebignore  is responsible to hold the name of those files which we don't want to push on a cloud.
+            Point 4. Create a requirements.txt file.
+                    Command : pip freeze > requirements.txt
+            Point 5. Create a folder called .ebextensions
+            Point 6. Inside .ebextensions we need a python.config file.
+            Point 7. Mention the commands in python.config
+                        option_settings:
+                          "aws:elasticbeanstalk:container:python":
+                            WSGIPath: application:application
+
+
+GCP Cloud Deployment
+
+Step1: Go to GCP cloud create a new project
+Step2: Create a new configuration File named as app.yaml and put the below content inside this newly created file
+        runtime: python
+        env: flex
+        entrypoint: gunicorn -b :$PORT main:application
+
+        runtime_config:
+          python_version: 3
+
+        manual_scaling:
+          instances: 1
+        resources:
+          cpu: 1
+          memory_gb: 0.5
+          disk_size_gb: 10
+
+Step3: Initialise a local git
+        git init
+        git add .
+        git commit -m "any message for commit"
+Step4: Go to your github.com  create a new repo and any name you can provide for that repo
+Step5: Push our code to our github repo
+        git push github_repo_url  branch_name
+Step6: Go to your GCP Cloud
+Step7: Click on  "Activate cloud shell" which is on the top right corner of your GCP browser view
+Step8: Once the cloud shell is activated go to your cloud shell and clone your github app which we have pushed at step5
+        git clone repo_url
+Step9: On the cloud shell itself get into/navigate the project folder
+        cd Project_folder_name
+Step10: After that we are supposed to connect our cloned app to project which we have created in Step1
+        gcloud config set project project_id
+Step11: execute the below command in gcloud shell
+        gclopud app deploy
